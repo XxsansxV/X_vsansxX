@@ -37,4 +37,3 @@ async def gap(interaction: discord.Interaction, lines:app_commands.Range[int, 1,
         tosend = f'{tosend}{emptychar}\n'
     await interaction.response.send_message(tosend)
 
-bot.run(TOKEN)
