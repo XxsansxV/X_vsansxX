@@ -1,5 +1,6 @@
 import os
 import subprocess
+import asyncio
 from dotenv import load_dotenv
 import discord
 from discord import app_commands
@@ -40,11 +41,14 @@ async def gap(interaction: discord.Interaction, lines:app_commands.Range[int, 1,
 
 @bot.tree.command(name="fortune", description="fortune messages")
 async def fortune(interaction: discord.Interaction):
+    await interaction.response.defer()
     try:
-        fortune_result = subprocess.run(['fortune'], capture_output=True, text=True, check=True)
+        fortune_result = await asyncio.to_thread(subprocess.run, ['fortune'], capture_output=True, text=True, check=True)
         fortune_result_output = fortune_result.stdout
-        await interaction.response.send_message(fortune_result_output)
+        await interaction.followup.send(fortune_result_output)
     except FileNotFoundError:
-        await interaction.response.send_message("The laptop the bot runs on doesn't have fortune-mod installed!")
+        await interaction.followup.send("The laptop the bot runs on doesn't have fortune-mod installed!")
+    except Exception:
+        await interaction.followup.send("Something went hborribly wrong.")
 
 bot.run(TOKEN)
