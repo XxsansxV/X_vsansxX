@@ -28,7 +28,7 @@ async def on_ready():
 
 @bot.tree.command(name="ping", description="Pings the bot and calculates the latency between the bot and the user")
 async def ping(interaction: discord.Interaction):
-    await interaction.response.send_message(f"**Pong!!!!** \n{interaction.user.mention}'s ping seems to be {round(bot.latency * 1000, 2)}ms \n-# *Keep in mind the bot also has some latency*")
+    await interaction.response.send_message(f"**Pong!!!!** my latency is roughly {round(bot.latency * 1000, 2)}ms right now!\n-# pssst, get me good wifi pls!!!")
 
 @bot.tree.command(name="greet", description="Greets <name>")
 async def greet(interaction: discord.Interaction, name:str):
@@ -51,15 +51,16 @@ async def fortune(interaction: discord.Interaction):
     except FileNotFoundError:
         await interaction.followup.send("The laptop the bot runs on doesn't have fortune-mod installed!")
     except Exception as e:
-        await interaction.followup.send("Something went hborribly wrong.")
+        await interaction.followup.send("Something went hborribly wrong. don't worry, it's never being resolved ;)")
         print(e)
 
 eightball_superanswers = (
     # eightball_superanswers[0] would print the respond, while [1] should use the color, neat, huh?
     # ("RESPOND","COLOR")
     ("DEFINITELY.",discord.Color.green()),
-    ("Evaluates to ```py \nTrue ````",discord.Color.green()),
-    ("According to my calculations, it is the **most likely** outcome.",discord.Color.green()),  
+    ("Surely",discord.Color.green()),
+    ("Evaluates to ```True ````",discord.Color.green()),
+    ("According to my calculations, it is the **highly likely**.",discord.Color.green()),  
     ("Highly likely ;)",discord.Color.green()),
     ("Why would't it be?",discord.Color.green()),
     ("Hell yeah!",discord.Color.green()),
@@ -67,6 +68,8 @@ eightball_superanswers = (
     ("Eh.... Maybe?",discord.Color.yellow()),
     ("Possibly",discord.Color.yellow()),
     ("Soon ;)",discord.Color.yellow()),
+    ("That too I wonder of",discord.Color.yellow()),
+    ("¯\_(ツ)_/¯",discord.Color.yellow()),
 
     ("Absolutely no.",discord.Color.red()),
     ("Nah.",discord.Color.red()),
@@ -78,7 +81,10 @@ eightball_superanswers = (
     ("Ask later",discord.Color.blue()),
     ("Oops! try again later",discord.Color.blue()),
     ("-_-",discord.Color.blue()),
-    ("0_o?",discord.Color.blue())
+    ("0_o?",discord.Color.blue()),
+
+    
+    ("Probably",discord.Color.yellow()),
 )
 
 @bot.tree.command(name="eightball", description="Responds yes/no questions with a random answer")
