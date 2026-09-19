@@ -2,6 +2,9 @@ import os
 import subprocess
 import asyncio
 from dotenv import load_dotenv
+
+import random
+
 import discord
 from discord import app_commands
 from discord.ext import commands
@@ -23,23 +26,22 @@ async def on_ready():
     except Exception as e:
         print(f'failed to sync commands: {e}')
 
-@bot.tree.command(name="ping", description="just pings the bot, really.")
+@bot.tree.command(name="ping", description="Pings the bot and calculates the latency between the bot and the user")
 async def ping(interaction: discord.Interaction):
-    await interaction.response.send_message("Pong!!!!",ephemeral=True)
+    await interaction.response.send_message(f"**Pong!!!!** \n{interaction.user.mention}'s ping seems to be {round(bot.latency * 1000, 2)}ms \n-# *Keep in mind the bot also has some latency*")
 
-@bot.tree.command(name="greet", description="Greets the user of this command, maybe.")
+@bot.tree.command(name="greet", description="Greets <name>")
 async def greet(interaction: discord.Interaction, name:str):
     await interaction.response.send_message(f'Hello, {name}')
 
-@bot.tree.command(name="gap",description="prints lines amounts of gaps")
+@bot.tree.command(name="gap",description="prints <lines> amounts of gaps")
 async def gap(interaction: discord.Interaction, lines:app_commands.Range[int, 1, 1000]):
     emptychar = '‎'
-    tosend = f''
-    for x in range(lines):
-        tosend = f'{tosend}{emptychar}\n'
+    tosend = ''
+    tosend = (emptychar + '\n') * lines
     await interaction.response.send_message(tosend)
 
-@bot.tree.command(name="fortune", description="fortune messages")
+@bot.tree.command(name="fortune", description="Random fortune-mod messages")
 async def fortune(interaction: discord.Interaction):
     await interaction.response.defer()
     try:
@@ -48,7 +50,70 @@ async def fortune(interaction: discord.Interaction):
         await interaction.followup.send(fortune_result_output)
     except FileNotFoundError:
         await interaction.followup.send("The laptop the bot runs on doesn't have fortune-mod installed!")
-    except Exception:
+    except Exception as e:
         await interaction.followup.send("Something went hborribly wrong.")
+        print(e)
 
+eightball_superanswers = (
+    # eightball_superanswers[0] would print the respond, while [1] should use the color, neat, huh?
+    # ("RESPOND","COLOR")
+    ("DEFINITELY.",discord.Color.green()),
+    ("Evaluates to ```py \nTrue ````",discord.Color.green()),
+    ("According to my calculations, it is the **most likely** outcome.",discord.Color.green()),  
+    ("Highly likely ;)",discord.Color.green()),
+    ("Why would't it be?",discord.Color.green()),
+    ("Hell yeah!",discord.Color.green()),
+
+    ("Eh.... Maybe?",discord.Color.yellow()),
+    ("Possibly",discord.Color.yellow()),
+    ("Soon ;)",discord.Color.yellow()),
+
+    ("Absolutely no.",discord.Color.red()),
+    ("Nah.",discord.Color.red()),
+    ("No.",discord.Color.red()),
+    ("Everythings points to this:\n**NO**.",discord.Color.red()),
+    ("Nope, no shot.",discord.Color.red()),
+    ("Never!!!!!!!",discord.Color.red()),
+
+    ("Ask later",discord.Color.blue()),
+    ("Oops! try again later",discord.Color.blue()),
+    ("-_-",discord.Color.blue()),
+    ("0_o?",discord.Color.blue())
+)
+
+@bot.tree.command(name="eightball", description="Responds yes/no questions with a random answer")
+async def eightball(interaction: discord.Interaction, question:str):
+    picked_eightball = random.randrange(0,len(eightball_superanswers))
+    embed = discord.Embed(
+        title="🎱 8ball",
+        description=f"Here's your response, {interaction.user.mention}",
+        color=eightball_superanswers[picked_eightball][1],
+    )
+    embed.add_field(name="Question",value=question)
+    embed.add_field(name="Response",value=eightball_superanswers[picked_eightball][0])
+    embed.set_footer(text=f"Requested by {interaction.user.name}")
+    await interaction.response.send_message(embed=embed)
+
+@bot.tree.command(name="help", description="Print out the help message.")
+async def help(interaction: discord.Interaction):
+    slash_commands = [cmd.name for cmd in bot.tree.walk_commands()]
+    slash_descriptions = [cmd.description for cmd in bot.tree.walk_commands()]
+
+    # legacy, used when i didn't want to show descriptions
+    # commands_toprint = "\n".join([f"- **{s}**" for s in slash_commands])
+     
+    commands_toprint : str = ""
+    for name, description in zip(slash_commands, slash_descriptions):
+        commands_toprint += f"- **{name}** : {description}\n"
+
+    slash_commands_count = len(slash_commands)
+    
+    embed = discord.Embed(
+        title="❓ Help",
+        description="X_vsansxX the pointless silly discord bot(tm)(r)(c)pte ltd",
+        color=discord.Color.green()
+    )
+    embed.add_field(name="List of commands : \n",value=f"{commands_toprint}Currently **{slash_commands_count}** commands.")
+    await interaction.response.send_message(embed=embed)
+    
 bot.run(TOKEN)
