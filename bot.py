@@ -30,9 +30,22 @@ async def on_ready():
 async def ping(interaction: discord.Interaction):
     await interaction.response.send_message(f"**Pong!!!!** my latency is roughly {round(bot.latency * 1000, 2)}ms right now!\n-# pssst, get me good wifi pls!!!")
 
+greetings = (
+    "Hello, {name} :)",
+    "Привет, {name} )))",
+    "Guten tag, {name}. Ich wuensch sie guten lebens.",
+    "Yo {name}, what's good?",
+    "Hey there! Glad to see you, {name}.",
+    "Wazzup {name}.",
+    "你好，{name}.",
+    "喂，{name}，你在吗？",
+    "नमस्ते, {name}",
+)
+
 @bot.tree.command(name="greet", description="Greets <name>")
 async def greet(interaction: discord.Interaction, name:str):
-    await interaction.response.send_message(f'Hello, {name}')
+    chosen_greeting = random.choice(greetings)
+    await interaction.response.send_message(chosen_greeting.format(name=name))
 
 @bot.tree.command(name="gap",description="prints <lines> amounts of gaps")
 async def gap(interaction: discord.Interaction, lines:app_commands.Range[int, 1, 1000]):
@@ -59,23 +72,28 @@ eightball_superanswers = (
     # ("RESPOND","COLOR")
     ("DEFINITELY.",discord.Color.green()),
     ("Surely",discord.Color.green()),
-    ("Evaluates to ```True ````",discord.Color.green()),
+    ("Evaluates to ```True ```",discord.Color.green()),
     ("According to my calculations, it is the **highly likely**.",discord.Color.green()),  
     ("Highly likely ;)",discord.Color.green()),
-    ("Why would't it be?",discord.Color.green()),
+    ("Why would't it be that way?",discord.Color.green()),
     ("Hell yeah!",discord.Color.green()),
+    ("We must be optimistic and assume that the answer is **YES**",discord.Color.green()),
 
     ("Eh.... Maybe?",discord.Color.yellow()),
     ("Possibly",discord.Color.yellow()),
-    ("Soon ;)",discord.Color.yellow()),
+    ("Perhaps???",discord.Color.yellow()),
     ("That too I wonder of",discord.Color.yellow()),
-    ("¯\_(ツ)_/¯",discord.Color.yellow()),
+    ("We must be optimistic enough to assume that it's true but also realistic enough to know it's likely false. So in conclusion: **Perchance**",discord.Color.yellow()),
+    ("¯\\_(ツ)_/¯",discord.Color.yellow()),
 
     ("Absolutely no.",discord.Color.red()),
     ("Nah.",discord.Color.red()),
     ("No.",discord.Color.red()),
     ("Everythings points to this:\n**NO**.",discord.Color.red()),
     ("Nope, no shot.",discord.Color.red()),
+    ("Why... would it ever be that way?", discord.Color.red()),
+    ("Stop delulu. **NO**",discord.Color.red()),
+    ("We should be realistic. **Nope**",discord.Color.red()),
     ("Never!!!!!!!",discord.Color.red()),
 
     ("Ask later",discord.Color.blue()),
