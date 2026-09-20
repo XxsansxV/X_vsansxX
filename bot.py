@@ -78,6 +78,7 @@ eightball_superanswers = (
     ("Why would't it be that way?",discord.Color.green()),
     ("Hell yeah!",discord.Color.green()),
     ("We must be optimistic and assume that the answer is **YES**",discord.Color.green()),
+    ("yes, indeed.",discord.Color.green()),
 
     ("Eh.... Maybe?",discord.Color.yellow()),
     ("Possibly",discord.Color.yellow()),
