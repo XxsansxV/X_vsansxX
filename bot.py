@@ -1,3 +1,5 @@
+# This bot is officially She/her and Lesbian.
+
 import os
 import subprocess
 import asyncio
