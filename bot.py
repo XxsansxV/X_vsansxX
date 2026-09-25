@@ -94,27 +94,23 @@ eightball_superanswers = (
     ("DEFINITELY.", discord.Color.green()),
     ("Surely", discord.Color.green()),
     ("Evaluates to ```True ```", discord.Color.green()),
-    (
-        "According to my calculations, it is the **highly likely**.",
-        discord.Color.green(),
-    ),
+    ("According to my calculations, it is the **highly likely**.", discord.Color.green()),
     ("Highly likely ;)", discord.Color.green()),
     ("Why would't it be that way?", discord.Color.green()),
     ("Hell yeah!", discord.Color.green()),
-    (
-        "We must be optimistic and assume that the answer is **YES**",
-        discord.Color.green(),
-    ),
+    ("We must be optimistic and assume that the answer is **YES**", discord.Color.green()),
     ("yes, indeed.", discord.Color.green()),
+    ("Outlook good", discord.Color.green()),
+
     ("Eh.... Maybe?", discord.Color.yellow()),
     ("Possibly", discord.Color.yellow()),
     ("Perhaps???", discord.Color.yellow()),
     ("That too I wonder of", discord.Color.yellow()),
-    (
-        "We must be optimistic enough to assume that it's true but also realistic enough to know it's likely false. So in conclusion: **Perchance**",
-        discord.Color.yellow(),
-    ),
+    ("We must be optimistic enough to assume that it's true but also realistic enough to know it's likely false. So in conclusion: **Perchance**",discord.Color.yellow()),
     ("¯\\_(ツ)_/¯", discord.Color.yellow()),
+    ("Probably", discord.Color.yellow()),
+    ("Uncertainty veils the answer to thy particular question...", discord.Color.yellow()),
+
     ("Absolutely no.", discord.Color.red()),
     ("Nah.", discord.Color.red()),
     ("No.", discord.Color.red()),
@@ -124,11 +120,12 @@ eightball_superanswers = (
     ("Stop delulu. **NO**", discord.Color.red()),
     ("We should be realistic. **Nope**", discord.Color.red()),
     ("Never!!!!!!!", discord.Color.red()),
+    ("Outlook bad", discord.Color.red()),
+
     ("Ask later", discord.Color.blue()),
     ("Oops! try again later", discord.Color.blue()),
     ("-_-", discord.Color.blue()),
     ("0_o?", discord.Color.blue()),
-    ("Probably", discord.Color.yellow()),
 )
 
 
